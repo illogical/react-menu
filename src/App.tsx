@@ -1,9 +1,14 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import { MyMenu } from "./menu/menu";
+import "semantic-ui-css/semantic.min.css";
 
 const App = () => {
-  return <div className="App" />;
+  return (
+    <div className="App">
+      <MyMenu />
+      some other content
+    </div>
+  );
 };
 
 export default App;
