@@ -8,15 +8,17 @@ import "./demo.css";
 
 export const LeftNav = () => {
   const [visible, setVisible] = useState(false);
+  const [effectClass, setEffectClass] = useState("");
+
   const onPusherClick = (e: any) => {
+    setEffectClass(e.target.getAttribute("data-effect"));
+    console.log(e.target.getAttribute("data-effect"));
+
     setVisible(!visible);
     console.log("Attempted to toggle.");
   };
 
   const onBodyClick = (e: any) => {
-    // TODO: block this if a menu item is being clicked
-    console.log("body clicked.");
-
     if (visible && !hasParentClass(e.target, "st-menu")) {
       setVisible(!visible);
       console.log("Attempted to toggle from body.");
@@ -24,12 +26,43 @@ export const LeftNav = () => {
   };
 
   const makeVisible = visible ? "st-menu-open" : "";
-  const containerClass = `st-container st-effect-3 ${makeVisible}`;
+  const containerClass = `st-container ${effectClass} ${makeVisible}`;
 
   return (
     <React.Fragment>
       <div id="st-container" className={containerClass}>
-        <nav className="st-menu st-effect-3" id="menu-3">
+        <nav className="st-menu st-effect-2" id="menu-2">
+          <h2 className="icon icon-stack">Sidebar</h2>
+          <ul>
+            <li>
+              <a className="icon icon-data" href="#">
+                Data Management
+              </a>
+            </li>
+            <li>
+              <a className="icon icon-location" href="#">
+                Location
+              </a>
+            </li>
+            <li>
+              <a className="icon icon-study" href="#">
+                Study
+              </a>
+            </li>
+            <li>
+              <a className="icon icon-photo" href="#">
+                Collections
+              </a>
+            </li>
+            <li>
+              <a className="icon icon-wallet" href="#">
+                Credits
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <nav className="st-menu st-effect-4" id="menu-4">
           <h2 className="icon icon-lab">Sidebar</h2>
           <ul>
             <li>
@@ -92,130 +125,6 @@ export const LeftNav = () => {
             </ul>
           </nav>
 
-          <nav className="st-menu st-effect-6" id="menu-6">
-            <h2 className="icon icon-stack">Sidebar</h2>
-            <ul>
-              <li>
-                <a className="icon icon-data" href="#">
-                  Data Management
-                </a>
-              </li>
-              <li>
-                <a className="icon icon-location" href="#">
-                  Location
-                </a>
-              </li>
-              <li>
-                <a className="icon icon-study" href="#">
-                  Study
-                </a>
-              </li>
-              <li>
-                <a className="icon icon-photo" href="#">
-                  Collections
-                </a>
-              </li>
-              <li>
-                <a className="icon icon-wallet" href="#">
-                  Credits
-                </a>
-              </li>
-            </ul>
-          </nav>
-
-          <nav className="st-menu st-effect-7" id="menu-7">
-            <h2 className="icon icon-lab">Sidebar</h2>
-            <ul>
-              <li>
-                <a className="icon icon-data" href="#">
-                  Data Management
-                </a>
-              </li>
-              <li>
-                <a className="icon icon-location" href="#">
-                  Location
-                </a>
-              </li>
-              <li>
-                <a className="icon icon-study" href="#">
-                  Study
-                </a>
-              </li>
-              <li>
-                <a className="icon icon-photo" href="#">
-                  Collections
-                </a>
-              </li>
-              <li>
-                <a className="icon icon-wallet" href="#">
-                  Credits
-                </a>
-              </li>
-            </ul>
-          </nav>
-
-          <nav className="st-menu st-effect-8" id="menu-8">
-            <h2 className="icon icon-stack">Sidebar</h2>
-            <ul>
-              <li>
-                <a className="icon icon-data" href="#">
-                  Data Management
-                </a>
-              </li>
-              <li>
-                <a className="icon icon-location" href="#">
-                  Location
-                </a>
-              </li>
-              <li>
-                <a className="icon icon-study" href="#">
-                  Study
-                </a>
-              </li>
-              <li>
-                <a className="icon icon-photo" href="#">
-                  Collections
-                </a>
-              </li>
-              <li>
-                <a className="icon icon-wallet" href="#">
-                  Credits
-                </a>
-              </li>
-            </ul>
-          </nav>
-
-          <nav className="st-menu st-effect-14" id="menu-14">
-            <h2 className="icon icon-stack">Sidebar</h2>
-            <ul>
-              <li>
-                <a className="icon icon-data" href="#">
-                  Data Management
-                </a>
-              </li>
-              <li>
-                <a className="icon icon-location" href="#">
-                  Location
-                </a>
-              </li>
-              <li>
-                <a className="icon icon-study" href="#">
-                  Study
-                </a>
-              </li>
-              <li>
-                <a className="icon icon-photo" href="#">
-                  Collections
-                </a>
-              </li>
-              <li>
-                <a className="icon icon-wallet" href="#">
-                  Credits
-                </a>
-              </li>
-            </ul>
-          </nav>
-
           <div className="st-content">
             <div className="st-content-inner">
               <div className="codrops-top clearfix">
@@ -242,24 +151,15 @@ export const LeftNav = () => {
               </header>
               <div className="main clearfix">
                 <div id="st-trigger-effects" className="column">
-                  <button data-effect="st-effect-1">Slide in on top</button>
-                  <button data-effect="st-effect-2">Reveal</button>
+                  <button data-effect="st-effect-2" onClick={onPusherClick}>
+                    Reveal
+                  </button>
                   <button data-effect="st-effect-3" onClick={onPusherClick}>
                     Push
                   </button>
-                  <button data-effect="st-effect-4">Slide along</button>
-                  <button data-effect="st-effect-5">Reverse slide out</button>
-                  <button data-effect="st-effect-6">Rotate pusher</button>
-                  <button data-effect="st-effect-7">3D rotate in</button>
-                  <button data-effect="st-effect-8">3D rotate out</button>
-                  <button data-effect="st-effect-9">Scale down pusher</button>
-                  <button data-effect="st-effect-10">Scale Up</button>
-                  <button data-effect="st-effect-11">
-                    Scale &amp; rotate pusher
+                  <button data-effect="st-effect-4" onClick={onPusherClick}>
+                    Slide along
                   </button>
-                  <button data-effect="st-effect-12">Open door</button>
-                  <button data-effect="st-effect-13">Fall down</button>
-                  <button data-effect="st-effect-14">Delayed 3D Rotate</button>
                 </div>
                 <div className="column">
                   <p>
