@@ -8,6 +8,7 @@ import {
   Menu,
   Image
 } from "semantic-ui-react";
+import "semantic-ui-css/semantic.min.css";
 
 export const MyMenu = () => {
   const [visible, setVisible] = useState(false);
