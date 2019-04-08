@@ -24,8 +24,7 @@ const exampleConfig: IMenuConfig = {
     {
       text: "Study",
       icon: "icon-study",
-      href: "#",
-      active: true
+      href: "#"
     },
     {
       text: "Collections",

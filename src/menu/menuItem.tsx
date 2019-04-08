@@ -3,11 +3,12 @@ import { IMenuConfigItem } from "./models";
 
 interface IMenuItemProps {
   config: IMenuConfigItem;
+  active?: boolean;
 }
 
-export const MenuItem = ({ config }: IMenuItemProps) => {
+export const MenuItem = ({ config, active }: IMenuItemProps) => {
   return (
-    <li className={config.active ? "active" : ""}>
+    <li className={active ? "active" : ""}>
       <a href={config.href} className={`icon ${config.icon}`}>
         {config.text}
       </a>

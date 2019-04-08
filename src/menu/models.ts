@@ -7,6 +7,5 @@ export interface IMenuConfig {
 export interface IMenuConfigItem {
   text: string;
   href: string;
-  active?: boolean;
   icon?: string;
 }

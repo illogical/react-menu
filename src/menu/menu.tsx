@@ -12,7 +12,7 @@ export const Menu = ({ config, effect }: IMenuProps) => {
   const menuItems =
     config.items &&
     config.items.map((item: IMenuConfigItem, index: number) => (
-      <MenuItem key={index} config={item} />
+      <MenuItem key={index} config={item} active={index === 2} />
     ));
 
   return (
