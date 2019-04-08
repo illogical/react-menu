@@ -1,10 +1,44 @@
 import React, { useState } from "react";
 import "./menu.css";
 import "./demo.css";
+import { IMenuConfig } from "./models";
+import { Menu } from "./menu";
 
 /*
     Based upon https://tympanus.net/Development/SidebarTransitions/
 */
+
+const exampleConfig: IMenuConfig = {
+  title: "Sidebar Example",
+  items: [
+    {
+      text: "Data Management",
+      icon: "icon-data",
+      href: "#"
+    },
+    {
+      text: "Location",
+      icon: "icon-location",
+      href: "#"
+    },
+    {
+      text: "Study",
+      icon: "icon-study",
+      href: "#",
+      active: true
+    },
+    {
+      text: "Collections",
+      icon: "icon-photo",
+      href: "#"
+    },
+    {
+      text: "Credits",
+      icon: "icon-wallet",
+      href: "#"
+    }
+  ]
+};
 
 export const LeftNav = () => {
   const [visible, setVisible] = useState(false);
@@ -31,13 +65,12 @@ export const LeftNav = () => {
   return (
     <React.Fragment>
       <div id="st-container" className={containerClass}>
-        <MenuExample effect="st-effect-1" />
-        <MenuExample effect="st-effect-2" />
-
-        <MenuExample effect="st-effect-4" />
+        <Menu config={exampleConfig} effect="st-effect-1" />
+        <Menu config={exampleConfig} effect="st-effect-2" />
+        <Menu config={exampleConfig} effect="st-effect-4" />
 
         <div className="st-pusher" onClick={onBodyClick}>
-          <MenuExample effect="st-effect-3" />
+          <Menu config={exampleConfig} effect="st-effect-3" />
 
           <div className="st-content">
             <div className="st-content-inner">
@@ -87,42 +120,7 @@ export const LeftNav = () => {
   );
 };
 
-interface MenuExampleProps {
-  effect: string;
-}
-const MenuExample = ({ effect }: MenuExampleProps) => (
-  <nav className={`st-menu ${effect}`} id="menu-4">
-    <h2 className="icon icon-lab">Sidebar</h2>
-    <ul>
-      <li>
-        <a className="icon icon-data" href="#">
-          Data Management
-        </a>
-      </li>
-      <li>
-        <a className="icon icon-location" href="#">
-          Location
-        </a>
-      </li>
-      <li>
-        <a className="icon icon-study" href="#">
-          Study
-        </a>
-      </li>
-      <li>
-        <a className="icon icon-photo" href="#">
-          Collections
-        </a>
-      </li>
-      <li>
-        <a className="icon icon-wallet" href="#">
-          Credits
-        </a>
-      </li>
-    </ul>
-  </nav>
-);
-
+// TODO: move to a utilities file
 const hasParentClass = (e: any, className: string): boolean => {
   if (e === document) return false;
   if (classReg(className).test(e.className)) {

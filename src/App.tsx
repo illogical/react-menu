@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { MyMenu } from "./menu/menu";
 import { LeftNav } from "./menu/leftNav";
 
 const App = () => {
