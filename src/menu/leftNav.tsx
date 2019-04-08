@@ -3,6 +3,8 @@ import "./menu.css";
 import "./demo.css";
 import { IMenuConfig } from "./models";
 import { Menu } from "./menu";
+const URI = require("urijs");
+import { MenuPageManager } from './menuPageManager';
 
 /*
     Based upon https://tympanus.net/Development/SidebarTransitions/
@@ -12,50 +14,86 @@ const exampleConfig: IMenuConfig = {
   title: "Sidebar Example",
   items: [
     {
-      text: "Data Management",
+      text: "Home",
       icon: "icon-data",
-      href: "#data"
+      href: "/home/"
     },
     {
-      text: "Location",
+      text: "Operations",
       icon: "icon-location",
-      href: "#location"
+      href: "/operations/"
     },
     {
-      text: "Study",
+      text: "Billing",
       icon: "icon-study",
-      href: "#study"
+      href: "/billing/"
     },
     {
-      text: "Collections",
+      text: "Credit Card Virtual Terminal",
       icon: "icon-photo",
-      href: "#collections"
+      href: "/vt/"
     },
     {
-      text: "Credits",
+      text: "Customers",
       icon: "icon-wallet",
-      href: "#",
+      href: "/customers/",
       submenu: {
         items: [
           {
-            text: "Credits 2",
+            text: "Tenants",
             icon: "icon-wallet",
-            href: "#credits2"
+            href: "/tenants/"
           },
           {
-            text: "Collections 2",
+            text: "Gate Access",
             icon: "icon-wallet",
-            href: "#collections2"
+            href: "/gateaccess/"
           }
         ]
       }
-    }
+    },
+    {
+      text: "Collections",
+      icon: "icon-wallet",
+      href: "/collections/"
+    },
+    {
+      text: "Adjustments",
+      icon: "icon-wallet",
+      href: "/adjustments/"
+    },
+    {
+      text: "eFile Management",
+      icon: "icon-wallet",
+      href: "/efile/"
+    },
+    {
+      text: "Reporting",
+      icon: "icon-wallet",
+      href: "/reporting/"
+    },
+    {
+      text: "3D Map",
+      icon: "icon-wallet",
+      href: "/map/"
+    },
+    {
+      text: "Settings",
+      icon: "icon-wallet",
+      href: "/settings/"
+    },
+    {
+      text: "Reminders",
+      icon: "icon-wallet",
+      href: "/reminders/"
+    },
   ]
 };
 
 export const LeftNav = () => {
   const [visible, setVisible] = useState(false);
   const [effectClass, setEffectClass] = useState("");
+  const [menuConfig, setMenuConfig] = useState(setActiveByLocation(exampleConfig, window.location.href));
 
   const onPusherClick = (e: any) => {
     setEffectClass(e.target.getAttribute("data-effect"));
@@ -72,6 +110,10 @@ export const LeftNav = () => {
     }
   };
 
+    const onMenuItemClick = (config: IMenuConfig, activeItemHref: string) => {
+        setMenuConfig(setActiveByLocation(config, activeItemHref));
+    }
+
   const makeVisible = visible ? "st-menu-open" : "";
   const containerClass = `st-container ${effectClass} ${makeVisible}`;
 
@@ -79,7 +121,7 @@ export const LeftNav = () => {
     <React.Fragment>
       <div id="st-container" className={containerClass}>
         <Menu config={exampleConfig} effect="st-effect-1" />
-        <Menu config={exampleConfig} effect="st-effect-2" />
+        <Menu config={menuConfig} onMenuItemClick={onMenuItemClick} effect="st-effect-2" />
         <Menu config={exampleConfig} effect="st-effect-4" />
 
         <div className="st-pusher" onClick={onBodyClick}>
@@ -132,6 +174,23 @@ export const LeftNav = () => {
     </React.Fragment>
   );
 };
+
+const setActiveByLocation = (config: IMenuConfig, location: string) => {
+  //TODO: return a new IMenuConfig that contains the selected menu item
+  //TODO: recursive function that works its way through a nested config to set the matching path to active
+  const currentUrl = new URI(location);  // TODO: Maybe don't wait for window.location to update to change the selection. Pass the href instead.
+  console.log('Current URL path', currentUrl.pathname());
+
+  return {
+    ...config,
+    items: config.items.map((item) => {
+      return {
+        ...item,
+        active: item.href != null && item.href.toLowerCase() === currentUrl.pathname()
+      }
+    })
+  }
+}
 
 // TODO: move to a utilities file
 const hasParentClass = (e: any, className: string): boolean => {

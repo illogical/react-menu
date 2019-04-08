@@ -1,14 +1,14 @@
 import React from "react";
 import { IMenuConfig, IMenuConfigItem } from "./models";
 import { MenuItem } from "./menuItem";
-const URI = require("urijs");
 
 export interface IMenuProps {
   config: IMenuConfig;
   effect?: string;
+  onMenuItemClick?: (config: IMenuConfig, activeItemHref: string) => void;
 }
 
-export const Menu = ({ config, effect }: IMenuProps) => {
+export const Menu = ({ config, effect, onMenuItemClick }: IMenuProps) => {
   // TODO: handle nested keys
   // TODO: add "pages"
   // TODO: breakcrumb for submenu "page"
@@ -18,15 +18,19 @@ export const Menu = ({ config, effect }: IMenuProps) => {
   const menuItems =
     config.items &&
     config.items.map((item: IMenuConfigItem, index: number) => {
-      const submenuClick = (e: any) => {
+      const handleMenuItemClick = (e: any) => {
         if (item.submenu) {
           e.preventDefault();
           console.log(item.submenu);
           // TODO: replace current menu with item.submenu
+          onMenuItemClick && onMenuItemClick(item.submenu, item.href);
+        }
+        else
+        {
+          onMenuItemClick && onMenuItemClick(config, item.href);
         }
 
-        const loc = new URI(window.location);
-        console.log(loc.hash());
+        console.log(item.text + ' was clicked.');
 
         // TODO: capture active item (or base this on window.location? https://github.com/medialize/URI.js)
       };
@@ -35,8 +39,8 @@ export const Menu = ({ config, effect }: IMenuProps) => {
         <MenuItem
           key={index}
           config={item}
-          active={handleActive(item.href, index)}
-          onItemClick={submenuClick}
+          active={item.active}
+          onItemClick={handleMenuItemClick}
         />
       );
     });
@@ -48,10 +52,4 @@ export const Menu = ({ config, effect }: IMenuProps) => {
       {/* {config.submenu && <Menu config={config.submenu} />} */}
     </nav>
   );
-};
-
-const handleActive = (href: string, index: number) => {
-  //TODO: this needs to cause the entire menu to re-render
-  const loc = new URI(window.location);
-  return loc.hash() === href;
 };
