@@ -9,6 +9,10 @@ export interface IMenuProps {
 
 export const Menu = ({ config, effect }: IMenuProps) => {
   // TODO: handle nested keys
+  // TODO: add "pages"
+  // TODO: breakcrumb for submenu "page"
+  // TODO: if active is on submenu, render the submenu "page"
+  // TODO: bring in React Router
   const menuItems =
     config.items &&
     config.items.map((item: IMenuConfigItem, index: number) => (
