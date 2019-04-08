@@ -14,27 +14,41 @@ const exampleConfig: IMenuConfig = {
     {
       text: "Data Management",
       icon: "icon-data",
-      href: "#"
+      href: "#data"
     },
     {
       text: "Location",
       icon: "icon-location",
-      href: "#"
+      href: "#location"
     },
     {
       text: "Study",
       icon: "icon-study",
-      href: "#"
+      href: "#study"
     },
     {
       text: "Collections",
       icon: "icon-photo",
-      href: "#"
+      href: "#collections"
     },
     {
       text: "Credits",
       icon: "icon-wallet",
-      href: "#"
+      href: "#",
+      submenu: {
+        items: [
+          {
+            text: "Credits 2",
+            icon: "icon-wallet",
+            href: "#credits2"
+          },
+          {
+            text: "Collections 2",
+            icon: "icon-wallet",
+            href: "#collections2"
+          }
+        ]
+      }
     }
   ]
 };
