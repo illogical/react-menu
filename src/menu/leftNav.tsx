@@ -4,7 +4,8 @@ import "./demo.css";
 import { IMenuConfig } from "./models";
 import { Menu } from "./menu";
 const URI = require("urijs");
-import { MenuPageManager } from './menuPageManager';
+import { MenuPageManager } from "./menuPageManager";
+import { Route } from "react-router-dom";
 
 /*
     Based upon https://tympanus.net/Development/SidebarTransitions/
@@ -86,14 +87,16 @@ const exampleConfig: IMenuConfig = {
       text: "Reminders",
       icon: "icon-wallet",
       href: "/reminders/"
-    },
+    }
   ]
 };
 
 export const LeftNav = () => {
   const [visible, setVisible] = useState(false);
   const [effectClass, setEffectClass] = useState("");
-  const [menuConfig, setMenuConfig] = useState(setActiveByLocation(exampleConfig, window.location.href));
+  const [menuConfig, setMenuConfig] = useState(
+    setActiveByLocation(exampleConfig, window.location.href)
+  );
 
   const onPusherClick = (e: any) => {
     setEffectClass(e.target.getAttribute("data-effect"));
@@ -110,9 +113,9 @@ export const LeftNav = () => {
     }
   };
 
-    const onMenuItemClick = (config: IMenuConfig, activeItemHref: string) => {
-        setMenuConfig(setActiveByLocation(config, activeItemHref));
-    }
+  const onMenuItemClick = (config: IMenuConfig, activeItemHref: string) => {
+    setMenuConfig(setActiveByLocation(config, activeItemHref));
+  };
 
   const makeVisible = visible ? "st-menu-open" : "";
   const containerClass = `st-container ${effectClass} ${makeVisible}`;
@@ -121,7 +124,11 @@ export const LeftNav = () => {
     <React.Fragment>
       <div id="st-container" className={containerClass}>
         <Menu config={exampleConfig} effect="st-effect-1" />
-        <Menu config={menuConfig} onMenuItemClick={onMenuItemClick} effect="st-effect-2" />
+        <Menu
+          config={menuConfig}
+          onMenuItemClick={onMenuItemClick}
+          effect="st-effect-2"
+        />
         <Menu config={exampleConfig} effect="st-effect-4" />
 
         <div className="st-pusher" onClick={onBodyClick}>
@@ -154,17 +161,9 @@ export const LeftNav = () => {
                   </p>
                 </div>
                 <div className="info">
-                  <p>If you enjoyed this demo you might also like:</p>
-                  <p>
-                    <a href="http://tympanus.net/Development/HeaderEffects/">
-                      On Scroll Header Effects
-                    </a>
-                  </p>
-                  <p>
-                    <a href="http://tympanus.net/Development/PageTransitions/">
-                      A Collection of Page Transitions
-                    </a>
-                  </p>
+                  <Route exact path="/" component={Home} />
+                  <Route path="/adjustments" component={Adjustments} />
+                  <Route path="/reporting" component={Reporting} />
                 </div>
               </div>
             </div>
@@ -175,22 +174,27 @@ export const LeftNav = () => {
   );
 };
 
+const Home = () => <h2>Home</h2>;
+const Adjustments = () => <h2>Adjustments</h2>;
+const Reporting = () => <h2>Reporting</h2>;
+
 const setActiveByLocation = (config: IMenuConfig, location: string) => {
   //TODO: return a new IMenuConfig that contains the selected menu item
   //TODO: recursive function that works its way through a nested config to set the matching path to active
-  const currentUrl = new URI(location);  // TODO: Maybe don't wait for window.location to update to change the selection. Pass the href instead.
-  console.log('Current URL path', currentUrl.pathname());
+  const currentUrl = new URI(location); // TODO: Maybe don't wait for window.location to update to change the selection. Pass the href instead.
+  console.log("Current URL path", currentUrl.pathname());
 
   return {
     ...config,
-    items: config.items.map((item) => {
+    items: config.items.map(item => {
       return {
         ...item,
-        active: item.href != null && item.href.toLowerCase() === currentUrl.pathname()
-      }
+        active:
+          item.href != null && item.href.toLowerCase() === currentUrl.pathname()
+      };
     })
-  }
-}
+  };
+};
 
 // TODO: move to a utilities file
 const hasParentClass = (e: any, className: string): boolean => {
