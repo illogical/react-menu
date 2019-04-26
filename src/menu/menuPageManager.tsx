@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { IMenuConfig } from './models';
 import { Menu } from './menu';
+import { faTasks, faBalanceScale, faCreditCard, faUser, faPhone, faBook, faBookmark, faCalculator, faMap, faWrench, faLightbulb } from '@fortawesome/free-solid-svg-icons';
 const URI = require("urijs");
 
 const exampleConfig: IMenuConfig = {
@@ -8,78 +9,77 @@ const exampleConfig: IMenuConfig = {
     items: [
       {
         text: "Home",
-        icon: "icon-data",
-        href: "#home"
+        href: "/home/"
       },
       {
         text: "Operations",
-        icon: "icon-location",
-        href: "#operations"
+        icon: faTasks,
+        href: "/operations/"
       },
       {
         text: "Billing",
-        icon: "icon-study",
-        href: "#billing"
+        icon: faBalanceScale,
+        href: "/billing/"
       },
       {
         text: "Credit Card Virtual Terminal",
-        icon: "icon-photo",
-        href: "#vt"
+        icon: faCreditCard,
+        href: "/virtualterminal/"
       },
       {
         text: "Customers",
-        icon: "icon-wallet",
-        href: "#customers",
+        icon: faUser,
+        href: "/customers/",
         submenu: {
           items: [
             {
               text: "Tenants",
-              icon: "icon-wallet",
-              href: "#tenants"
+              icon: faUser,
+              href: "/tenants/"
             },
             {
               text: "Gate Access",
-              icon: "icon-wallet",
-              href: "#gateAccess"
+              icon: faUser,
+              href: "/gateaccess/"
             }
           ]
         }
       },
       {
         text: "Collections",
-        icon: "icon-wallet",
-        href: "#collections"
+        icon: faPhone,
+        href: "/collections/"
       },
       {
         text: "Adjustments",
-        icon: "icon-wallet",
-        href: "#adjustments"
+        icon: faBook,
+        href: "/adjustments/"
       },
       {
         text: "eFile Management",
-        icon: "icon-wallet",
-        href: "#efile"
+        icon: faBookmark,
+        href: "/efile/"
       },
       {
         text: "Reporting",
-        icon: "icon-wallet",
-        href: "#reporting"
+        icon: faCalculator,
+        href: "/reporting/"
       },
       {
         text: "3D Map",
-        icon: "icon-wallet",
-        href: "#map"
+        icon: faMap,
+        href: "/map/"
       },
       {
         text: "Settings",
-        icon: "icon-wallet",
-        href: "#settings"
+        icon: faWrench,
+        href: "/settings/"
       },
       {
         text: "Reminders",
-        icon: "icon-wallet",
-        href: "#reminders"
-      },
+        icon: faLightbulb,
+        href: "/reminders/"
+      }
     ]
   };
 

@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.17",
+    "@fortawesome/free-solid-svg-icons": "^5.8.1",
+    "@fortawesome/react-fontawesome": "^0.1.4",
     "@types/jest": "24.0.11",
     "@types/node": "11.13.0",
     "@types/react": "16.8.12",
@@ -15,6 +18,7 @@
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.86.0",
     "typescript": "3.4.1",
+    "uninstall": "0.0.0",
     "urijs": "^1.19.1"
   },
   "scripts": {

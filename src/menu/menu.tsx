@@ -24,11 +24,15 @@ export const Menu = ({ config, effect, onMenuItemClick }: IMenuProps) => {
           console.log(item.submenu);
           // TODO: replace current menu with item.submenu
           onMenuItemClick && onMenuItemClick(item.submenu, item.href);
-        } else {
+        }
+        else
+        {
           onMenuItemClick && onMenuItemClick(config, item.href);
         }
 
-        console.log(item.text + " was clicked.");
+        console.log(item.text + ' was clicked.');
+
+        // TODO: capture active item (or base this on window.location? https://github.com/medialize/URI.js)
       };
 
       return (

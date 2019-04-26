@@ -6,6 +6,7 @@ import { Menu } from "./menu";
 const URI = require("urijs");
 import { MenuPageManager } from "./menuPageManager";
 import { Route } from "react-router-dom";
+import { faTasks, faBalanceScale, faUser, faCreditCard, faPhone, faBook, faBookmark, faCalculator, faMap, faWrench, faLightbulb } from '@fortawesome/free-solid-svg-icons';
 
 /*
     Based upon https://tympanus.net/Development/SidebarTransitions/
@@ -16,38 +17,37 @@ const exampleConfig: IMenuConfig = {
   items: [
     {
       text: "Home",
-      icon: "icon-data",
       href: "/home/"
     },
     {
       text: "Operations",
-      icon: "icon-location",
+      icon: faTasks,
       href: "/operations/"
     },
     {
       text: "Billing",
-      icon: "icon-study",
+      icon: faBalanceScale,
       href: "/billing/"
     },
     {
       text: "Credit Card Virtual Terminal",
-      icon: "icon-photo",
-      href: "/vt/"
+      icon: faCreditCard,
+      href: "/virtualterminal/"
     },
     {
       text: "Customers",
-      icon: "icon-wallet",
+      icon: faUser,
       href: "/customers/",
       submenu: {
         items: [
           {
             text: "Tenants",
-            icon: "icon-wallet",
+            icon: faUser,
             href: "/tenants/"
           },
           {
             text: "Gate Access",
-            icon: "icon-wallet",
+            icon: faUser,
             href: "/gateaccess/"
           }
         ]
@@ -55,37 +55,37 @@ const exampleConfig: IMenuConfig = {
     },
     {
       text: "Collections",
-      icon: "icon-wallet",
+      icon: faPhone,
       href: "/collections/"
     },
     {
       text: "Adjustments",
-      icon: "icon-wallet",
+      icon: faBook,
       href: "/adjustments/"
     },
     {
       text: "eFile Management",
-      icon: "icon-wallet",
+      icon: faBookmark,
       href: "/efile/"
     },
     {
       text: "Reporting",
-      icon: "icon-wallet",
+      icon: faCalculator,
       href: "/reporting/"
     },
     {
       text: "3D Map",
-      icon: "icon-wallet",
+      icon: faMap,
       href: "/map/"
     },
     {
       text: "Settings",
-      icon: "icon-wallet",
+      icon: faWrench,
       href: "/settings/"
     },
     {
       text: "Reminders",
-      icon: "icon-wallet",
+      icon: faLightbulb,
       href: "/reminders/"
     }
   ]
@@ -129,6 +129,7 @@ export const LeftNav = () => {
           onMenuItemClick={onMenuItemClick}
           effect="st-effect-2"
         />
+        <div className="menu-shadow" />
         <Menu config={exampleConfig} effect="st-effect-4" />
 
         <div className="st-pusher" onClick={onBodyClick}>
