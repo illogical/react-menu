@@ -107,6 +107,10 @@ body,
   list-style: none;
 }
 
+.st-menu img {
+  margin: 12px;
+}
+
 .st-menu h2 {
   margin: 0;
   padding: 1em;

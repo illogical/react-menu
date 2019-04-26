@@ -1,14 +1,18 @@
 import React from "react";
 import { IMenuConfig, IMenuConfigItem } from "./models";
 import { MenuItem } from "./menuItem";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import logo from '../images/SiteLinkLogo-White.png'
 
 export interface IMenuProps {
   config: IMenuConfig;
   effect?: string;
   onMenuItemClick?: (config: IMenuConfig, activeItemHref: string) => void;
+  onTitleClick?: () => void;
 }
 
-export const Menu = ({ config, effect, onMenuItemClick }: IMenuProps) => {
+export const Menu = ({ config, effect, onMenuItemClick, onTitleClick }: IMenuProps) => {
   // TODO: handle nested keys
   // TODO: add "pages"
   // TODO: breakcrumb for submenu "page"
@@ -47,8 +51,11 @@ export const Menu = ({ config, effect, onMenuItemClick }: IMenuProps) => {
 
   return (
     <nav className={`st-menu ${effect}`}>
-      {config.title && <h2 className="icon icon-lab">{config.title}</h2>}
-      <ul>{menuItems}</ul>
+      <img src={logo} />
+      <ul>
+        {config.title && <li><a onClick={onTitleClick}><h3><FontAwesomeIcon icon={faChevronLeft} /> {config.title}</h3></a></li>}
+        {menuItems}
+      </ul>
       {/* {config.submenu && <Menu config={config.submenu} />} */}
     </nav>
   );

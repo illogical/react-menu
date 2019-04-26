@@ -13,7 +13,6 @@ import { faTasks, faBalanceScale, faUser, faCreditCard, faPhone, faBook, faBookm
 */
 
 const exampleConfig: IMenuConfig = {
-  title: "Sidebar Example",
   items: [
     {
       text: "Home",
@@ -39,6 +38,7 @@ const exampleConfig: IMenuConfig = {
       icon: faUser,
       href: "/customers/",
       submenu: {
+        title: "Customers",
         items: [
           {
             text: "Tenants",
@@ -94,7 +94,7 @@ const exampleConfig: IMenuConfig = {
 export const LeftNav = () => {
   const [visible, setVisible] = useState(false);
   const [effectClass, setEffectClass] = useState("");
-  const [menuConfig, setMenuConfig] = useState(
+  const [menuConfig, setMenuConfig] = useState<IMenuConfig>(
     setActiveByLocation(exampleConfig, window.location.href)
   );
 
@@ -113,6 +113,10 @@ export const LeftNav = () => {
     }
   };
 
+  const onSubmenuTitleClick = () => {
+    setMenuConfig(exampleConfig);
+  }
+
   const onMenuItemClick = (config: IMenuConfig, activeItemHref: string) => {
     setMenuConfig(setActiveByLocation(config, activeItemHref));
   };
@@ -123,17 +127,18 @@ export const LeftNav = () => {
   return (
     <React.Fragment>
       <div id="st-container" className={containerClass}>
-        <Menu config={exampleConfig} effect="st-effect-1" />
+        <Menu config={exampleConfig} effect="st-effect-1" onTitleClick={onSubmenuTitleClick} />
         <Menu
           config={menuConfig}
           onMenuItemClick={onMenuItemClick}
           effect="st-effect-2"
+          onTitleClick={onSubmenuTitleClick}
         />
         <div className="menu-shadow" />
-        <Menu config={exampleConfig} effect="st-effect-4" />
+        <Menu config={exampleConfig} effect="st-effect-4" onTitleClick={onSubmenuTitleClick} />
 
         <div className="st-pusher" onClick={onBodyClick}>
-          <Menu config={exampleConfig} effect="st-effect-3" />
+          <Menu config={exampleConfig} effect="st-effect-3" onTitleClick={onSubmenuTitleClick} />
 
           <div className="st-content">
             <div className="st-content-inner">
@@ -196,6 +201,8 @@ const setActiveByLocation = (config: IMenuConfig, location: string) => {
     })
   };
 };
+
+
 
 // TODO: move to a utilities file
 const hasParentClass = (e: any, className: string): boolean => {
