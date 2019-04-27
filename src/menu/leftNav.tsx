@@ -4,148 +4,35 @@ import "./demo.css";
 import { IMenuConfig } from "./models";
 import { Menu } from "./menu";
 const URI = require("urijs");
-import { MenuPageManager } from "./menuPageManager";
-import { Route } from "react-router-dom";
-import {
-  faTasks,
-  faBalanceScale,
-  faUser,
-  faCreditCard,
-  faPhone,
-  faBook,
-  faBookmark,
-  faCalculator,
-  faMap,
-  faWrench,
-  faLightbulb
-} from "@fortawesome/free-solid-svg-icons";
+
+import { hasParentClass } from "../utilities/classUtils";
+import { hubMenuConfig } from "./hubMenuConfig";
 
 /*
     Based upon https://tympanus.net/Development/SidebarTransitions/
 */
 
-const hubMenuConfig: IMenuConfig = {
-  items: [
-    {
-      text: "Home",
-      href: "/home/"
-    },
-    {
-      text: "Operations",
-      icon: faTasks,
-      submenu: {
-        title: "Operations",
-        items: [
-          {
-            text: "Payments",
-            icon: faBalanceScale,
-            href: "/payments/"
-          },
-          {
-            text: "Move In",
-            icon: faBalanceScale,
-            href: "/movein/"
-          },
-          {
-            text: "Move Out",
-            icon: faBalanceScale,
-            href: "/moveout/"
-          },
-          {
-            text: "Transfer",
-            icon: faBalanceScale,
-            href: "/transfer/"
-          }
-        ]
-      }
-    },
-    {
-      text: "Billing",
-      icon: faBalanceScale,
-      href: "/billing/"
-    },
-    {
-      text: "Credit Card Virtual Terminal",
-      icon: faCreditCard,
-      href: "/virtualterminal/"
-    },
-    {
-      text: "Customers",
-      icon: faUser,
-      submenu: {
-        title: "Customers",
-        items: [
-          {
-            text: "Tenants",
-            icon: faUser,
-            href: "/tenants/"
-          },
-          {
-            text: "Gate Access",
-            icon: faUser,
-            href: "/gateaccess/"
-          }
-        ]
-      }
-    },
-    {
-      text: "Collections",
-      icon: faPhone,
-      href: "/collections/"
-    },
-    {
-      text: "Adjustments",
-      icon: faBook,
-      href: "/adjustments/"
-    },
-    {
-      text: "eFile Management",
-      icon: faBookmark,
-      href: "/efile/"
-    },
-    {
-      text: "Reporting",
-      icon: faCalculator,
-      href: "/reporting/"
-    },
-    {
-      text: "3D Map",
-      icon: faMap,
-      href: "/map/"
-    },
-    {
-      text: "Settings",
-      icon: faWrench,
-      href: "/settings/"
-    },
-    {
-      text: "Reminders",
-      icon: faLightbulb,
-      href: "/reminders/"
-    }
-  ]
-};
-
 // TODO: if active is on submenu, render the submenu "page"
+
 export const LeftNav: React.FunctionComponent = ({ children }) => {
   const [visible, setVisible] = useState(false);
   const [effectClass, setEffectClass] = useState(""); // allows switching animation styles
   const [menuConfig, setMenuConfig] = useState<IMenuConfig>(
-    setActiveByLocation(hubMenuConfig, window.location.href)
+    findMenuContainingPath(hubMenuConfig, window.location.href)
   );
 
-  const onPusherClick = (e: any) => {
+  const onToggleMenuClick = (e: any) => {
     setEffectClass(e.target.getAttribute("data-effect"));
     console.log(e.target.getAttribute("data-effect"));
 
     setVisible(!visible);
-    console.log("Attempted to toggle.");
+    console.log("Attempted to toggle via button click.");
   };
 
   const onBodyClick = (e: any) => {
     if (visible && !hasParentClass(e.target, "st-menu")) {
       setVisible(!visible);
-      console.log("Attempted to toggle from body.");
+      console.log("Attempted to toggle via body click.");
     }
   };
 
@@ -172,7 +59,7 @@ export const LeftNav: React.FunctionComponent = ({ children }) => {
 
         <div className="st-pusher" onClick={onBodyClick}>
           <div className="content">
-            <button data-effect="st-effect-2" onClick={onPusherClick}>
+            <button data-effect="st-effect-2" onClick={onToggleMenuClick}>
               {visible ? "Close" : "Open"} Menu
             </button>
             {children}
@@ -183,7 +70,10 @@ export const LeftNav: React.FunctionComponent = ({ children }) => {
   );
 };
 
-const setActiveByLocation = (config: IMenuConfig, location?: string) => {
+const setActiveByLocation = (
+  config: IMenuConfig,
+  location?: string
+): IMenuConfig => {
   if (!location) {
     return config;
   }
@@ -197,21 +87,41 @@ const setActiveByLocation = (config: IMenuConfig, location?: string) => {
       return {
         ...item,
         active:
-          item.href != null && item.href.toLowerCase() === currentUrl.pathname()
+          item.href != null &&
+          item.href.toLowerCase() === currentUrl.pathname().toLowerCase()
       };
     })
   };
 };
 
-// TODO: move to a utilities file
-const hasParentClass = (e: any, className: string): boolean => {
-  if (e === document) return false;
-  if (classReg(className).test(e.className)) {
-    return true;
+// select the menu or submenu that contains a link to the current url
+const findMenuContainingPath = (
+  config: IMenuConfig,
+  location: string
+): IMenuConfig => {
+  if (containsPath(config, location)) {
+    return setActiveByLocation(config, location);
   }
 
-  return e.parentNode && hasParentClass(e.parentNode, className);
+  let foundInConfig: IMenuConfig = config;
+  config.items.map(menuItem => {
+    if (menuItem.submenu && containsPath(menuItem.submenu, location)) {
+      foundInConfig = setActiveByLocation(menuItem.submenu, location);
+    }
+  });
+
+  return foundInConfig;
 };
 
-const classReg = (className: string) =>
-  new RegExp("(^|\\s+)" + className + "(\\s+|$)");
+const containsPath = (config: IMenuConfig, location: string): boolean => {
+  const currentUrl = new URI(location);
+
+  const foundItems = config.items.filter(menuItem => {
+    return (
+      menuItem.href &&
+      menuItem.href.toLowerCase() === currentUrl.pathname().toLowerCase()
+    );
+  });
+
+  return foundItems.length > 0;
+};

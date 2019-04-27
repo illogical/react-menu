@@ -18,6 +18,10 @@ const App = () => {
             <Route path="/settings" component={Settings} />
             <Route path="/reminders" component={Reminders} />
             <Route path="/virtualterminal" component={VirtualTerminal} />
+            <Route path="/payments" component={Payments} />
+            <Route path="/movein" component={MoveIn} />
+            <Route path="/moveout" component={MoveOut} />
+            <Route path="/transfer" component={Transfer} />
           </div>
         </LeftNav>
       </Router>
@@ -35,5 +39,9 @@ const Map = () => <h2>Map</h2>;
 const Settings = () => <h2>Settings</h2>;
 const Reminders = () => <h2>Reminders</h2>;
 const VirtualTerminal = () => <h2>Virtual Terminal</h2>;
+const Payments = () => <h2>Payments</h2>;
+const MoveIn = () => <h2>MoveIn</h2>;
+const MoveOut = () => <h2>MoveOut</h2>;
+const Transfer = () => <h2>Transfer</h2>;
 
 export default App;
