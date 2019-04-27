@@ -1,9 +1,9 @@
 import React from "react";
 import { IMenuConfig, IMenuConfigItem } from "./models";
 import { MenuItem } from "./menuItem";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import logo from '../images/SiteLinkLogo-White.png'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import logo from "../images/SiteLinkLogo-White.png";
 
 export interface IMenuProps {
   config: IMenuConfig;
@@ -12,12 +12,13 @@ export interface IMenuProps {
   onTitleClick?: () => void;
 }
 
-export const Menu = ({ config, effect, onMenuItemClick, onTitleClick }: IMenuProps) => {
-  // TODO: handle nested keys
-  // TODO: add "pages"
-  // TODO: breakcrumb for submenu "page"
-  // TODO: if active is on submenu, render the submenu "page"
-  // TODO: bring in React Router
+export const Menu = ({
+  config,
+  effect,
+  onMenuItemClick,
+  onTitleClick
+}: IMenuProps) => {
+  // TODO: handle nested keys?
 
   const menuItems =
     config.items &&
@@ -28,13 +29,11 @@ export const Menu = ({ config, effect, onMenuItemClick, onTitleClick }: IMenuPro
           console.log(item.submenu);
           // TODO: replace current menu with item.submenu
           onMenuItemClick && onMenuItemClick(item.submenu, item.href);
-        }
-        else
-        {
+        } else {
           onMenuItemClick && onMenuItemClick(config, item.href);
         }
 
-        console.log(item.text + ' was clicked.');
+        console.log(item.text + " was clicked.");
 
         // TODO: capture active item (or base this on window.location? https://github.com/medialize/URI.js)
       };
@@ -53,7 +52,15 @@ export const Menu = ({ config, effect, onMenuItemClick, onTitleClick }: IMenuPro
     <nav className={`st-menu ${effect}`}>
       <img src={logo} />
       <ul>
-        {config.title && <li><a onClick={onTitleClick}><h3><FontAwesomeIcon icon={faChevronLeft} /> {config.title}</h3></a></li>}
+        {config.title && (
+          <li className="menu-title">
+            <a onClick={onTitleClick}>
+              <h3>
+                <FontAwesomeIcon icon={faChevronLeft} /> {config.title}
+              </h3>
+            </a>
+          </li>
+        )}
         {menuItems}
       </ul>
       {/* {config.submenu && <Menu config={config.submenu} />} */}

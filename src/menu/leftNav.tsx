@@ -6,7 +6,19 @@ import { Menu } from "./menu";
 const URI = require("urijs");
 import { MenuPageManager } from "./menuPageManager";
 import { Route } from "react-router-dom";
-import { faTasks, faBalanceScale, faUser, faCreditCard, faPhone, faBook, faBookmark, faCalculator, faMap, faWrench, faLightbulb } from '@fortawesome/free-solid-svg-icons';
+import {
+  faTasks,
+  faBalanceScale,
+  faUser,
+  faCreditCard,
+  faPhone,
+  faBook,
+  faBookmark,
+  faCalculator,
+  faMap,
+  faWrench,
+  faLightbulb
+} from "@fortawesome/free-solid-svg-icons";
 
 /*
     Based upon https://tympanus.net/Development/SidebarTransitions/
@@ -21,7 +33,32 @@ const exampleConfig: IMenuConfig = {
     {
       text: "Operations",
       icon: faTasks,
-      href: "/operations/"
+      href: "/operations/",
+      submenu: {
+        title: "Operations",
+        items: [
+          {
+            text: "Payments",
+            icon: faBalanceScale,
+            href: "/payments/"
+          },
+          {
+            text: "Move In",
+            icon: faBalanceScale,
+            href: "/movein/"
+          },
+          {
+            text: "Move Out",
+            icon: faBalanceScale,
+            href: "/moveout/"
+          },
+          {
+            text: "Transfer",
+            icon: faBalanceScale,
+            href: "/transfer/"
+          }
+        ]
+      }
     },
     {
       text: "Billing",
@@ -91,9 +128,11 @@ const exampleConfig: IMenuConfig = {
   ]
 };
 
+// TODO: if active is on submenu, render the submenu "page"
+
 export const LeftNav = () => {
   const [visible, setVisible] = useState(false);
-  const [effectClass, setEffectClass] = useState("");
+  const [effectClass, setEffectClass] = useState(""); // allows switching animation styles
   const [menuConfig, setMenuConfig] = useState<IMenuConfig>(
     setActiveByLocation(exampleConfig, window.location.href)
   );
@@ -115,63 +154,41 @@ export const LeftNav = () => {
 
   const onSubmenuTitleClick = () => {
     setMenuConfig(exampleConfig);
-  }
+  };
 
   const onMenuItemClick = (config: IMenuConfig, activeItemHref: string) => {
     setMenuConfig(setActiveByLocation(config, activeItemHref));
   };
 
   const makeVisible = visible ? "st-menu-open" : "";
-  const containerClass = `st-container ${effectClass} ${makeVisible}`;
+  const containerClass = `left-nav ${effectClass} ${makeVisible}`;
 
   return (
     <React.Fragment>
-      <div id="st-container" className={containerClass}>
-        <Menu config={exampleConfig} effect="st-effect-1" onTitleClick={onSubmenuTitleClick} />
+      <div className={containerClass}>
         <Menu
           config={menuConfig}
           onMenuItemClick={onMenuItemClick}
           effect="st-effect-2"
           onTitleClick={onSubmenuTitleClick}
         />
-        <div className="menu-shadow" />
-        <Menu config={exampleConfig} effect="st-effect-4" onTitleClick={onSubmenuTitleClick} />
 
         <div className="st-pusher" onClick={onBodyClick}>
-          <Menu config={exampleConfig} effect="st-effect-3" onTitleClick={onSubmenuTitleClick} />
-
-          <div className="st-content">
-            <div className="st-content-inner">
-              <header className="codrops-header">
-                <h1>Sidebar Transitions</h1>
-              </header>
-              <div className="main clearfix">
-                <div id="st-trigger-effects" className="column">
-                  <button data-effect="st-effect-1" onClick={onPusherClick}>
-                    Slide in on top
-                  </button>
-                  <button data-effect="st-effect-2" onClick={onPusherClick}>
-                    Reveal
-                  </button>
-                  <button data-effect="st-effect-3" onClick={onPusherClick}>
-                    Push
-                  </button>
-                  <button data-effect="st-effect-4" onClick={onPusherClick}>
-                    Slide along
-                  </button>
-                </div>
-                <div className="column">
-                  <p>
-                    Here is some inspiration for showing them in style using CSS
-                    transitions.
-                  </p>
-                </div>
-                <div className="info">
-                  <Route exact path="/" component={Home} />
-                  <Route path="/adjustments" component={Adjustments} />
-                  <Route path="/reporting" component={Reporting} />
-                </div>
-              </div>
+          <div className="content">
+            <button data-effect="st-effect-2" onClick={onPusherClick}>
+              {visible ? "Close" : "Open"} Menu
+            </button>
+            <div>
+              <Route exact path="/" component={Home} />
+              <Route path="/adjustments" component={Adjustments} />
+              <Route path="/efile" component={Efile} />
+              <Route path="/reporting" component={Reporting} />
+              <Route path="/collections" component={Collections} />
+              <Route path="/billing" component={Billing} />
+              <Route path="/map" component={Map} />
+              <Route path="/settings" component={Settings} />
+              <Route path="/reminders" component={Reminders} />
+              <Route path="/virtualterminal" component={VirtualTerminal} />
             </div>
           </div>
         </div>
@@ -183,6 +200,13 @@ export const LeftNav = () => {
 const Home = () => <h2>Home</h2>;
 const Adjustments = () => <h2>Adjustments</h2>;
 const Reporting = () => <h2>Reporting</h2>;
+const Efile = () => <h2>eFile</h2>;
+const Collections = () => <h2>eFile</h2>;
+const Billing = () => <h2>Billing</h2>;
+const Map = () => <h2>Map</h2>;
+const Settings = () => <h2>Settings</h2>;
+const Reminders = () => <h2>Reminders</h2>;
+const VirtualTerminal = () => <h2>Virtual Terminal</h2>;
 
 const setActiveByLocation = (config: IMenuConfig, location: string) => {
   //TODO: return a new IMenuConfig that contains the selected menu item
@@ -201,8 +225,6 @@ const setActiveByLocation = (config: IMenuConfig, location: string) => {
     })
   };
 };
-
-
 
 // TODO: move to a utilities file
 const hasParentClass = (e: any, className: string): boolean => {
