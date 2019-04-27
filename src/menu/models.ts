@@ -1,4 +1,4 @@
-import { IconDefinition } from '@fortawesome/fontawesome-common-types';
+import { IconDefinition } from "@fortawesome/fontawesome-common-types";
 
 export interface IMenuConfig {
   items: IMenuConfigItem[];
@@ -7,7 +7,7 @@ export interface IMenuConfig {
 
 export interface IMenuConfigItem {
   text: string;
-  href: string;
+  href?: string;
   active?: boolean;
   icon?: IconDefinition;
   submenu?: IMenuConfig;

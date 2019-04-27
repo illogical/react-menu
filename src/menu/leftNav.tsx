@@ -24,7 +24,7 @@ import {
     Based upon https://tympanus.net/Development/SidebarTransitions/
 */
 
-const exampleConfig: IMenuConfig = {
+const hubMenuConfig: IMenuConfig = {
   items: [
     {
       text: "Home",
@@ -33,7 +33,6 @@ const exampleConfig: IMenuConfig = {
     {
       text: "Operations",
       icon: faTasks,
-      href: "/operations/",
       submenu: {
         title: "Operations",
         items: [
@@ -73,7 +72,6 @@ const exampleConfig: IMenuConfig = {
     {
       text: "Customers",
       icon: faUser,
-      href: "/customers/",
       submenu: {
         title: "Customers",
         items: [
@@ -129,12 +127,11 @@ const exampleConfig: IMenuConfig = {
 };
 
 // TODO: if active is on submenu, render the submenu "page"
-
-export const LeftNav = () => {
+export const LeftNav: React.FunctionComponent = ({ children }) => {
   const [visible, setVisible] = useState(false);
   const [effectClass, setEffectClass] = useState(""); // allows switching animation styles
   const [menuConfig, setMenuConfig] = useState<IMenuConfig>(
-    setActiveByLocation(exampleConfig, window.location.href)
+    setActiveByLocation(hubMenuConfig, window.location.href)
   );
 
   const onPusherClick = (e: any) => {
@@ -153,10 +150,10 @@ export const LeftNav = () => {
   };
 
   const onSubmenuTitleClick = () => {
-    setMenuConfig(exampleConfig);
+    setMenuConfig(hubMenuConfig);
   };
 
-  const onMenuItemClick = (config: IMenuConfig, activeItemHref: string) => {
+  const onMenuItemClick = (config: IMenuConfig, activeItemHref?: string) => {
     setMenuConfig(setActiveByLocation(config, activeItemHref));
   };
 
@@ -178,18 +175,7 @@ export const LeftNav = () => {
             <button data-effect="st-effect-2" onClick={onPusherClick}>
               {visible ? "Close" : "Open"} Menu
             </button>
-            <div>
-              <Route exact path="/" component={Home} />
-              <Route path="/adjustments" component={Adjustments} />
-              <Route path="/efile" component={Efile} />
-              <Route path="/reporting" component={Reporting} />
-              <Route path="/collections" component={Collections} />
-              <Route path="/billing" component={Billing} />
-              <Route path="/map" component={Map} />
-              <Route path="/settings" component={Settings} />
-              <Route path="/reminders" component={Reminders} />
-              <Route path="/virtualterminal" component={VirtualTerminal} />
-            </div>
+            {children}
           </div>
         </div>
       </div>
@@ -197,20 +183,11 @@ export const LeftNav = () => {
   );
 };
 
-const Home = () => <h2>Home</h2>;
-const Adjustments = () => <h2>Adjustments</h2>;
-const Reporting = () => <h2>Reporting</h2>;
-const Efile = () => <h2>eFile</h2>;
-const Collections = () => <h2>eFile</h2>;
-const Billing = () => <h2>Billing</h2>;
-const Map = () => <h2>Map</h2>;
-const Settings = () => <h2>Settings</h2>;
-const Reminders = () => <h2>Reminders</h2>;
-const VirtualTerminal = () => <h2>Virtual Terminal</h2>;
+const setActiveByLocation = (config: IMenuConfig, location?: string) => {
+  if (!location) {
+    return config;
+  }
 
-const setActiveByLocation = (config: IMenuConfig, location: string) => {
-  //TODO: return a new IMenuConfig that contains the selected menu item
-  //TODO: recursive function that works its way through a nested config to set the matching path to active
   const currentUrl = new URI(location); // TODO: Maybe don't wait for window.location to update to change the selection. Pass the href instead.
   console.log("Current URL path", currentUrl.pathname());
 

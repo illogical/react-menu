@@ -8,7 +8,7 @@ import logo from "../images/SiteLinkLogo-White.png";
 export interface IMenuProps {
   config: IMenuConfig;
   effect?: string;
-  onMenuItemClick?: (config: IMenuConfig, activeItemHref: string) => void;
+  onMenuItemClick?: (config: IMenuConfig, activeItemHref?: string) => void;
   onTitleClick?: () => void;
 }
 
