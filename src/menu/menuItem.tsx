@@ -22,7 +22,9 @@ export const MenuItem = ({ config, active, onItemClick }: IMenuItemProps) => {
         </em>
       )}
       {!config.href ? (
-        <a>{config.text}</a>
+        <a>
+          {config.icon && <FontAwesomeIcon icon={config.icon} />} {config.text}
+        </a>
       ) : (
         <Link to={config.href}>
           {config.icon && <FontAwesomeIcon icon={config.icon} />} {config.text}
