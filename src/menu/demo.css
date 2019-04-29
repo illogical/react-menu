@@ -48,3 +48,16 @@ button {
 button:hover {
   background: #2c774b;
 }
+
+/* TESTING */
+div.box {
+  width: 100px;
+  height: 100px;
+  background: red;
+}
+
+div.animate {
+  width: 300px;
+  -webkit-transition: width 2s; /* Safari */
+  transition: width 2s;
+}

@@ -1,6 +1,7 @@
 import React from "react";
 import { LeftNav } from "./menu/leftNav";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { TestAnimation } from "./menu/testAnimation";
 
 const App = () => {
   return (
@@ -29,7 +30,12 @@ const App = () => {
   );
 };
 
-const Home = () => <h2>Home</h2>;
+const Home = () => (
+  <div>
+    <h2>Home</h2>
+    <TestAnimation />
+  </div>
+);
 const Adjustments = () => <h2>Adjustments</h2>;
 const Reporting = () => <h2>Reporting</h2>;
 const Efile = () => <h2>eFile</h2>;

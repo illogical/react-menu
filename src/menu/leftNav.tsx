@@ -59,10 +59,12 @@ export const LeftNav: React.FunctionComponent = ({ children }) => {
 
         <div className="st-pusher" onClick={onBodyClick}>
           <div className="content">
-            <button data-effect="st-effect-2" onClick={onToggleMenuClick}>
-              {visible ? "Close" : "Open"} Menu
-            </button>
-            {children}
+            <div className="content-inner">
+              <button data-effect="st-effect-2" onClick={onToggleMenuClick}>
+                {visible ? "Close" : "Open"} Menu
+              </button>
+              {children}
+            </div>
           </div>
         </div>
       </div>
