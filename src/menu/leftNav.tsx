@@ -12,8 +12,6 @@ import { hubMenuConfig } from "./hubMenuConfig";
     Based upon https://tympanus.net/Development/SidebarTransitions/
 */
 
-// TODO: if active is on submenu, render the submenu "page"
-
 export const LeftNav: React.FunctionComponent = ({ children }) => {
   const [visible, setVisible] = useState(false);
   const [effectClass, setEffectClass] = useState(""); // allows switching animation styles
