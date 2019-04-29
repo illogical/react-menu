@@ -17,7 +17,8 @@ export const hubMenuConfig: IMenuConfig = {
   items: [
     {
       text: "Home",
-      href: "/home/"
+      href: "/",
+      hideActiveStyle: true
     },
     {
       text: "Operations",
@@ -27,22 +28,18 @@ export const hubMenuConfig: IMenuConfig = {
         items: [
           {
             text: "Payments",
-            icon: faBalanceScale,
             href: "/payments/"
           },
           {
             text: "Move In",
-            icon: faBalanceScale,
             href: "/movein/"
           },
           {
             text: "Move Out",
-            icon: faBalanceScale,
             href: "/moveout/"
           },
           {
             text: "Transfer",
-            icon: faBalanceScale,
             href: "/transfer/"
           }
         ]
@@ -66,12 +63,10 @@ export const hubMenuConfig: IMenuConfig = {
         items: [
           {
             text: "Tenants",
-            icon: faUser,
             href: "/tenants/"
           },
           {
             text: "Gate Access",
-            icon: faUser,
             href: "/gateaccess/"
           }
         ]

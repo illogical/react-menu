@@ -12,24 +12,28 @@ interface IMenuItemProps {
 
 export const MenuItem = ({ config, active, onItemClick }: IMenuItemProps) => {
   return (
-    <li className={active ? "active" : ""} onClick={onItemClick}>
-      {config.submenu && config.submenu.items.length > 0 && (
-        <em className="counter">
-          {config.submenu.items.length}{" "}
+    <li className={active && !config.hideActiveStyle ? "active" : ""} onClick={onItemClick}>
+      <div>
+        {config.submenu && config.submenu.items.length > 0 && (
+          <em className="counter">
           <span>
-            <FontAwesomeIcon icon={faChevronRight} />
-          </span>
-        </em>
-      )}
-      {!config.href ? (
-        <a>
-          {config.icon && <FontAwesomeIcon icon={config.icon} />} {config.text}
-        </a>
-      ) : (
-        <Link to={config.href}>
-          {config.icon && <FontAwesomeIcon icon={config.icon} />} {config.text}
-        </Link>
-      )}
+            {config.submenu.items.length}{" "}
+            </span>
+              <FontAwesomeIcon icon={faChevronRight} />
+
+          </em>
+        )}
+        {!config.href ? (
+          <a>
+            {config.icon && <FontAwesomeIcon icon={config.icon} />} {config.text}
+          </a>
+        ) : (
+          <Link to={config.href}>
+            {config.icon && <FontAwesomeIcon icon={config.icon} />} {config.text}
+          </Link>
+        )}
+      </div>
+
     </li>
   );
 };

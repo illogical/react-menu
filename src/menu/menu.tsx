@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { IMenuConfig, IMenuConfigItem } from "./models";
 import { MenuItem } from "./menuItem";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,7 +18,13 @@ export const Menu = ({
   onMenuItemClick,
   onTitleClick
 }: IMenuProps) => {
-  // TODO: handle nested keys?
+  const [animateClass, setAnimateClass] = useState("");
+
+  useEffect(() => {
+    setTimeout(() => {
+      setAnimateClass("visible");
+    }, 100);
+  }, [config])
 
   const menuItems =
     config.items &&
@@ -27,6 +33,7 @@ export const Menu = ({
         if (item.submenu) {
           e.preventDefault();
           console.log(item.submenu);
+          setAnimateClass("changing");
           // TODO: replace current menu with item.submenu
           onMenuItemClick && onMenuItemClick(item.submenu, item.href);
         } else {
@@ -48,22 +55,32 @@ export const Menu = ({
       );
     });
 
+    const handleTitleClick = () =>
+    {
+      if(onTitleClick)
+      {
+        setAnimateClass("changing");
+        onTitleClick();
+      }
+    }
+
+
   return (
     <nav className={`st-menu ${effect}`}>
-      <img src={logo} />
+    <a href="/"><img src={logo} /></a>
+    <div className={`menu-content ${animateClass}`}>
       <ul>
         {config.title && (
           <li className="menu-title">
-            <a onClick={onTitleClick}>
-              <h3>
+            <a onClick={handleTitleClick}>
                 <FontAwesomeIcon icon={faChevronLeft} /> {config.title}
-              </h3>
             </a>
           </li>
         )}
         {menuItems}
       </ul>
       {/* {config.submenu && <Menu config={config.submenu} />} */}
+      </div>
     </nav>
   );
 };

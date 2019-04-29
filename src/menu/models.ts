@@ -11,4 +11,5 @@ export interface IMenuConfigItem {
   active?: boolean;
   icon?: IconDefinition;
   submenu?: IMenuConfig;
+  hideActiveStyle?: boolean;
 }
