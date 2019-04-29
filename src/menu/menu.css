@@ -172,7 +172,6 @@ body,
 .st-menu ul li:hover,
 .st-menu ul li.active:hover {
   background: #008ac4;
-  color: #fff;
 }
 
 .st-menu ul li.active a {
@@ -187,6 +186,11 @@ body,
 .st-menu ul li:hover {
   box-shadow: inset 0 -1px rgba(0, 0, 0, 0);
   cursor: pointer;
+}
+
+.st-menu ul li.active a,
+.st-menu ul li:hover a {
+  color: #fff;
 }
 
 /* Menu transition animation */
