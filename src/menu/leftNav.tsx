@@ -5,7 +5,6 @@ import { IMenuConfig } from "./models";
 import { Menu } from "./menu";
 const URI = require("urijs");
 
-import { hasParentClass } from "../utilities/classUtils";
 import { hubMenuConfig } from "./hubMenuConfig";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -18,37 +17,37 @@ import {
 */
 
 export const LeftNav: React.FunctionComponent = ({ children }) => {
-  const [visible, setVisible] = useState(false);
-  const [effectClass, setEffectClass] = useState(""); // allows switching animation styles
+  const [visible, setVisible] = useState(true);
+  const [parentConfig, setParentConfig] = useState<IMenuConfig>(hubMenuConfig); // allows the menu to get 3-levels deep
   const [menuConfig, setMenuConfig] = useState<IMenuConfig>(
     findMenuContainingPath(hubMenuConfig, window.location.href)
   );
 
   const onToggleMenuClick = (e: any) => {
-    setEffectClass("st-effect-2");
-
     setVisible(!visible);
     console.log("Attempted to toggle via button click.");
   };
 
-  const onBodyClick = (e: any) => {
-    if (visible && !hasParentClass(e.target, "st-menu")) {
-      setVisible(!visible);
-      console.log("Attempted to toggle via body click.");
-    }
-  };
-
   const onSubmenuTitleClick = () => {
-    setMenuConfig(setActiveByLocation(hubMenuConfig, window.location.href));
+    setMenuConfig(setActiveByLocation(parentConfig, window.location.href));
+    setParentConfig(hubMenuConfig);
   };
 
-  const onMenuItemClick = (config: IMenuConfig, activeItemHref?: string) => {
-    setMenuConfig(setActiveByLocation(config, activeItemHref));
+  const onMenuItemClick = (
+    subMenuConfig: IMenuConfig,
+    activeItemHref?: string,
+    parentMenuConfig?: IMenuConfig
+  ) => {
+    if (parentMenuConfig) {
+      setParentConfig(parentMenuConfig);
+    }
+
+    setMenuConfig(setActiveByLocation(subMenuConfig, activeItemHref));
   };
 
   const makeVisible = visible ? "st-menu-open" : "";
-  const containerClass = `left-nav ${effectClass} ${makeVisible}`;
-  const menuToggleClass = `menu-toggle ${effectClass} ${makeVisible}`;
+  const containerClass = `left-nav st-effect-2 ${makeVisible}`;
+  const menuToggleClass = `menu-toggle st-effect-2 ${makeVisible}`;
 
   return (
     <React.Fragment>
@@ -63,13 +62,13 @@ export const LeftNav: React.FunctionComponent = ({ children }) => {
           </div>
         </div>
         <Menu
-          config={menuConfig}
+          menuConfig={menuConfig}
           onMenuItemClick={onMenuItemClick}
           effect="st-effect-2"
           onTitleClick={onSubmenuTitleClick}
         />
 
-        <div className="st-pusher" onClick={onBodyClick}>
+        <div className="st-pusher">
           <div className="content">
             <div className="content-inner">{children}</div>
           </div>

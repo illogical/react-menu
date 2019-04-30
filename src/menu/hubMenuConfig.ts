@@ -27,6 +27,10 @@ export const hubMenuConfig: IMenuConfig = {
         title: "Operations",
         items: [
           {
+            text: "Lead to Lease",
+            href: "/leadtolease/"
+          },
+          {
             text: "Payments",
             href: "/payments/"
           },
@@ -41,6 +45,26 @@ export const hubMenuConfig: IMenuConfig = {
           {
             text: "Transfer",
             href: "/transfer/"
+          },
+          {
+            text: "Merchandise",
+            submenu: {
+              title: "Merchandise",
+              items: [
+                {
+                  text: "Merchandise Purchase",
+                  href: "/MerchandisePurchase/"
+                },
+                {
+                  text: "Merchandise Return",
+                  href: "/Merchandise/Refund/"
+                },
+                {
+                  text: "Walk-In Merchandise Void",
+                  href: "/Merchandise/Refund/GetVoid/"
+                }
+              ]
+            }
           }
         ]
       }
@@ -109,3 +133,5 @@ export const hubMenuConfig: IMenuConfig = {
     }
   ]
 };
+
+const operations = {};

@@ -51,17 +51,6 @@ body,
   transition: opacity 0.5s;
 }
 
-.xmenu-shadow {
-  position: fixed;
-  width: 240px;
-  top: 0;
-  left: 0;
-  height: 100%;
-  box-shadow: 8px 0 8px #a9a5a5;
-  overflow: hidden;
-  background-color: red;
-}
-
 .st-menu ul li.menu-title {
   cursor: pointer;
   font-size: 1.1em;
@@ -80,6 +69,7 @@ body,
   visibility: hidden;
   width: 240px;
   height: 100%;
+  box-shadow: 8px 0 8px #a9a5a5;
   background: linear-gradient(#1d78ac, #134d6f);
   color: rgba(255, 255, 255, 0.85);
   -webkit-transition: all 0.5s;
@@ -224,7 +214,11 @@ body,
 
 @media (min-width: 1199px) {
   .menu-toggle {
-    xdisplay: none;
+    display: none;
+  }
+
+  .st-menu-open .st-effect-2.st-menu {
+    z-index: 100;
   }
 }
 

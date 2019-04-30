@@ -10,32 +10,40 @@ import logo from "../images/SiteLinkLogo-White.png";
 import { useComponentAnimation } from "../hooks/useComponentAnimation";
 
 export interface IMenuProps {
-  config: IMenuConfig;
+  menuConfig: IMenuConfig;
   effect?: string;
-  onMenuItemClick?: (config: IMenuConfig, activeItemHref?: string) => void;
+  onMenuItemClick?: (
+    subMenuConfig: IMenuConfig,
+    activeItemHref?: string,
+    parentMenuConfig?: IMenuConfig
+  ) => void;
   onTitleClick?: () => void;
 }
 
 export const Menu = ({
-  config,
+  menuConfig,
   effect,
   onMenuItemClick,
   onTitleClick
 }: IMenuProps) => {
-  const { animation, setAnimation } = useComponentAnimation("visible", config);
+  const { animation, setAnimation } = useComponentAnimation(
+    "visible",
+    menuConfig
+  );
 
   const menuItems =
-    config.items &&
-    config.items.map((item: IMenuConfigItem, index: number) => {
+    menuConfig.items &&
+    menuConfig.items.map((item: IMenuConfigItem, index: number) => {
       const handleMenuItemClick = (e: any) => {
         if (item.submenu) {
           e.preventDefault();
           console.log(item.submenu);
           setAnimation("submenu changing");
           // TODO: replace current menu with item.submenu
-          onMenuItemClick && onMenuItemClick(item.submenu, item.href);
+          onMenuItemClick &&
+            onMenuItemClick(item.submenu, item.href, menuConfig);
         } else {
-          onMenuItemClick && onMenuItemClick(config, item.href);
+          onMenuItemClick && onMenuItemClick(menuConfig, item.href);
         }
 
         console.log(item.text + " was clicked.");
@@ -61,25 +69,27 @@ export const Menu = ({
   };
 
   return (
-    <nav className={`st-menu ${effect}`}>
-      <a href="/">
-        <img src={logo} />
-      </a>
-      <div className={`menu-content ${animation}`}>
-        <ul>
-          {config.title && (
-            <li className="menu-title">
-              <div>
-                <a onClick={handleTitleClick}>
-                  <FontAwesomeIcon icon={faChevronLeft} /> {config.title}
-                </a>
-              </div>
-            </li>
-          )}
-          {menuItems}
-        </ul>
-        {/* {config.submenu && <Menu config={config.submenu} />} */}
-      </div>
-    </nav>
+    <div className="menu-shell">
+      <nav className={`st-menu ${effect}`}>
+        <a href="/">
+          <img src={logo} />
+        </a>
+        <div className={`menu-content ${animation}`}>
+          <ul>
+            {menuConfig.title && (
+              <li className="menu-title">
+                <div>
+                  <a onClick={handleTitleClick}>
+                    <FontAwesomeIcon icon={faChevronLeft} /> {menuConfig.title}
+                  </a>
+                </div>
+              </li>
+            )}
+            {menuItems}
+          </ul>
+          {/* {config.submenu && <Menu config={config.submenu} />} */}
+        </div>
+      </nav>
+    </div>
   );
 };
