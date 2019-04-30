@@ -7,6 +7,11 @@ const URI = require("urijs");
 
 import { hasParentClass } from "../utilities/classUtils";
 import { hubMenuConfig } from "./hubMenuConfig";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faAngleDoubleLeft,
+  faAngleDoubleRight
+} from "@fortawesome/free-solid-svg-icons";
 
 /*
     Based upon https://tympanus.net/Development/SidebarTransitions/
@@ -20,8 +25,7 @@ export const LeftNav: React.FunctionComponent = ({ children }) => {
   );
 
   const onToggleMenuClick = (e: any) => {
-    setEffectClass(e.target.getAttribute("data-effect"));
-    console.log(e.target.getAttribute("data-effect"));
+    setEffectClass("st-effect-2");
 
     setVisible(!visible);
     console.log("Attempted to toggle via button click.");
@@ -44,10 +48,20 @@ export const LeftNav: React.FunctionComponent = ({ children }) => {
 
   const makeVisible = visible ? "st-menu-open" : "";
   const containerClass = `left-nav ${effectClass} ${makeVisible}`;
+  const menuToggleClass = `menu-toggle ${effectClass} ${makeVisible}`;
 
   return (
     <React.Fragment>
       <div className={containerClass}>
+        <div className={menuToggleClass}>
+          <div className="menu-control" onClick={onToggleMenuClick}>
+            {visible ? (
+              <FontAwesomeIcon icon={faAngleDoubleLeft} />
+            ) : (
+              <FontAwesomeIcon icon={faAngleDoubleRight} />
+            )}
+          </div>
+        </div>
         <Menu
           config={menuConfig}
           onMenuItemClick={onMenuItemClick}
@@ -57,12 +71,7 @@ export const LeftNav: React.FunctionComponent = ({ children }) => {
 
         <div className="st-pusher" onClick={onBodyClick}>
           <div className="content">
-            <div className="content-inner">
-              <button data-effect="st-effect-2" onClick={onToggleMenuClick}>
-                {visible ? "Close" : "Open"} Menu
-              </button>
-              {children}
-            </div>
+            <div className="content-inner">{children}</div>
           </div>
         </div>
       </div>

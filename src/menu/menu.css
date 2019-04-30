@@ -193,6 +193,41 @@ body,
   color: #fff;
 }
 
+.menu-toggle {
+  position: fixed;
+  /* right: 5px; */
+  cursor: pointer;
+  color: #fff;
+  background-color: #1d78ac;
+  border-top-right-radius: 7px;
+  border-bottom-right-radius: 7px;
+  border-width: 1px 1px 1px 0;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.3);
+  left: -1px;
+  top: -1px;
+  width: 40px;
+  height: 40px;
+  z-index: 111;
+  text-align: center;
+}
+
+.menu-control {
+  font-size: 2em;
+  text-align: center;
+  cursor: pointer;
+  height: 40px;
+  width: 40px;
+  padding-top: 3px;
+  color: #fff;
+}
+
+@media (min-width: 1199px) {
+  .menu-toggle {
+    xdisplay: none;
+  }
+}
+
 /* Menu transition animation */
 .st-menu .menu-content {
   visibility: visible;
@@ -240,6 +275,7 @@ body,
 }
 
 /* Effect 2: Reveal */
+.st-effect-2.menu-toggle.st-menu-open,
 .st-effect-2.st-menu-open .st-pusher {
   -webkit-transform: translate3d(240px, 0, 0);
   transform: translate3d(240px, 0, 0);
@@ -249,12 +285,14 @@ body,
   z-index: 1;
 }
 
+.st-effect-2.menu-toggle,
 .st-effect-2.st-menu-open .st-effect-2.st-menu {
   visibility: visible;
   -webkit-transition: -webkit-transform 0.5s;
   transition: transform 0.5s;
 }
 
+.st-effect-2.menu-toggle::after,
 .st-effect-2.st-menu::after {
   display: none;
 }

@@ -2,7 +2,10 @@ import React, { useState, useEffect } from "react";
 import { IMenuConfig, IMenuConfigItem } from "./models";
 import { MenuItem } from "./menuItem";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChevronLeft,
+  faAngleDoubleLeft
+} from "@fortawesome/free-solid-svg-icons";
 import logo from "../images/SiteLinkLogo-White.png";
 import { useComponentAnimation } from "../hooks/useComponentAnimation";
 
