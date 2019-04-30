@@ -183,6 +183,8 @@ body,
   color: #fff;
 }
 
+/* toggle button */
+
 .menu-toggle {
   position: fixed;
   /* right: 5px; */

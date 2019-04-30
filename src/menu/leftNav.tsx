@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./menu.css";
 import "./demo.css";
 import { IMenuConfig } from "./models";
@@ -19,9 +19,14 @@ import {
 export const LeftNav: React.FunctionComponent = ({ children }) => {
   const [visible, setVisible] = useState(true);
   const [parentConfig, setParentConfig] = useState<IMenuConfig>(hubMenuConfig); // allows the menu to get 3-levels deep
-  const [menuConfig, setMenuConfig] = useState<IMenuConfig>(
-    findMenuContainingPath(hubMenuConfig, window.location.href)
-  );
+  const [menuConfig, setMenuConfig] = useState<IMenuConfig>(hubMenuConfig);
+
+  // on component load, set the menu to the page that contains the browser's current URL
+  useEffect(() => {
+    setMenuConfig(
+      findMenuContainingPath(hubMenuConfig, hubMenuConfig, window.location.href)
+    );
+  }, []);
 
   const onToggleMenuClick = (e: any) => {
     setVisible(!visible);
@@ -103,23 +108,29 @@ const setActiveByLocation = (
 };
 
 // select the menu or submenu that contains a link to the current url
+// this recursive function is fairly gross
 const findMenuContainingPath = (
   config: IMenuConfig,
+  submenuConfig: IMenuConfig,
   location: string
 ): IMenuConfig => {
-  let menuContainingLink: IMenuConfig = config;
   // check if any submenus' urls match the current browser url
-  config.items.map(menuItem => {
-    if (menuItem.submenu && containsPath(menuItem.submenu, location)) {
-      menuContainingLink = findMenuContainingPath(menuItem.submenu, location);
-    }
-  });
 
-  if (containsPath(config, location)) {
-    return setActiveByLocation(config, location);
+  if (containsPath(submenuConfig, location)) {
+    return setActiveByLocation(submenuConfig, location);
   }
 
-  return menuContainingLink;
+  for (let i = 0; i < submenuConfig.items.length; i++) {
+    const currentItem = submenuConfig.items[i];
+    if (currentItem.submenu) {
+      let sub = findMenuContainingPath(config, currentItem.submenu, location);
+      if (containsPath(sub, location)) {
+        return sub;
+      }
+    }
+  }
+
+  return config;
 };
 
 const containsPath = (config: IMenuConfig, location: string): boolean => {

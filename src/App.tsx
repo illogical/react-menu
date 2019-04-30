@@ -23,6 +23,14 @@ const App = () => {
             <Route path="/movein" component={MoveIn} />
             <Route path="/moveout" component={MoveOut} />
             <Route path="/transfer" component={Transfer} />
+            <Route path="/tenants" component={Tenants} />
+            <Route path="/gateaccess" component={GateAccess} />
+            <Route
+              path="/MerchandisePurchase/"
+              component={MerchandisePurchase}
+            />
+            <Route path="/Merchandise/Refund/" component={MerchandiseReturn} />
+            <Route path="/Merchandise/GetVoid/" component={MerchandiseVoid} />
           </div>
         </LeftNav>
       </Router>
@@ -49,5 +57,10 @@ const Payments = () => <h2>Payments</h2>;
 const MoveIn = () => <h2>MoveIn</h2>;
 const MoveOut = () => <h2>MoveOut</h2>;
 const Transfer = () => <h2>Transfer</h2>;
+const Tenants = () => <h2>Tenants</h2>;
+const GateAccess = () => <h2>Gate Access</h2>;
+const MerchandisePurchase = () => <h2>Merchandise Purchase</h2>;
+const MerchandiseReturn = () => <h2>Merchandise Return</h2>;
+const MerchandiseVoid = () => <h2>Merchandise Void</h2>;
 
 export default App;
