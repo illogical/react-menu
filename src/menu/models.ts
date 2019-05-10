@@ -1,11 +1,11 @@
 import { IconDefinition } from "@fortawesome/fontawesome-common-types";
 
 export interface IMenuConfig {
-  items: IMenuConfigItem[];
+  items: IMenuItemConfig[];
   title?: string;
 }
 
-export interface IMenuConfigItem {
+export interface IMenuItemConfig {
   text: string;
   href?: string;
   active?: boolean;

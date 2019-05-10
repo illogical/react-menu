@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { IMenuConfig, IMenuConfigItem } from "./models";
+import { IMenuConfig, IMenuItemConfig } from "./models";
 import { MenuItem } from "./menuItem";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -33,7 +33,7 @@ export const Menu = ({
 
   const menuItems =
     menuConfig.items &&
-    menuConfig.items.map((item: IMenuConfigItem, index: number) => {
+    menuConfig.items.map((item: IMenuItemConfig, index: number) => {
       const handleMenuItemClick = (e: any) => {
         if (item.submenu) {
           e.preventDefault();
@@ -47,8 +47,6 @@ export const Menu = ({
         }
 
         console.log(item.text + " was clicked.");
-
-        // TODO: capture active item (or base this on window.location? https://github.com/medialize/URI.js)
       };
 
       return (

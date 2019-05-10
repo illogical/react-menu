@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { IMenuConfigItem } from "./models";
+import { IMenuItemConfig } from "./models";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
 interface IMenuItemProps {
-  config: IMenuConfigItem;
+  config: IMenuItemConfig;
   onItemClick?: (e: any) => void;
   active?: boolean;
 }

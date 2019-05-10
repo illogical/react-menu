@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./menu.css";
 import "./demo.css";
-import { IMenuConfig } from "./models";
+import { IMenuConfig, IMenuItemConfig } from "./models";
 import { Menu } from "./menu";
 const URI = require("urijs");
 
@@ -108,7 +108,6 @@ const setActiveByLocation = (
 };
 
 // select the menu or submenu that contains a link to the current url
-// this recursive function is fairly gross
 const findMenuContainingPath = (
   config: IMenuConfig,
   submenuConfig: IMenuConfig,
@@ -120,10 +119,9 @@ const findMenuContainingPath = (
     return setActiveByLocation(submenuConfig, location);
   }
 
-  for (let i = 0; i < submenuConfig.items.length; i++) {
-    const currentItem = submenuConfig.items[i];
-    if (currentItem.submenu) {
-      let sub = findMenuContainingPath(config, currentItem.submenu, location);
+  for (const item of submenuConfig.items) {
+    if (item.submenu) {
+      const sub = findMenuContainingPath(config, item.submenu, location);
       if (containsPath(sub, location)) {
         return sub;
       }
